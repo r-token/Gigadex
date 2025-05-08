@@ -7,10 +7,6 @@
 
 import Foundation
 
-enum PokemonGen {
-    case gen1, gen2, gen3, gen4, gen5, gen6, gen7, gen8, gen9
-}
-
 enum APIError: Error {
     case message(String)
 
@@ -20,7 +16,7 @@ enum APIError: Error {
 }
 
 struct API {
-    static func fetchAllPokemon(for gen: PokemonGen) async throws -> [PokemonInfo] {
+    static func fetchAllPokemon(for gen: PokemonGen) async throws -> [Pokemon] {
         let baseUrl = "https://pokeapi.co/api/v2"
         guard var urlComponents = URLComponents(string: baseUrl) else {
             throw APIError("Invalid server URL: \(baseUrl)")
@@ -98,13 +94,13 @@ struct API {
             throw APIError("Unexpected response body, error: \(error.localizedDescription)")
         }
 
-        var pokemonInfoList: [PokemonInfo] = []
+        var pokemonList: [Pokemon] = []
         for pokemon in pokemonSummaryWrapper.results {
             let id = getPokeId(from: pokemon.url)
-            let pokemonInfo = PokemonInfo(id: id, name: pokemon.name)
-            pokemonInfoList.append(pokemonInfo)
+            let pokemon = Pokemon(id: id, name: pokemon.name)
+            pokemonList.append(pokemon)
         }
-        return pokemonInfoList
+        return pokemonList
     }
 
     static func fetchDetails(for pokemonId: String) async throws -> PokemonDetails {

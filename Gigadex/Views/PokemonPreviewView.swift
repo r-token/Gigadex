@@ -8,19 +8,33 @@
 import SwiftUI
 
 struct PokemonPreviewView: View {
-    let pokemon: PokemonInfo
+    let pokemon: Pokemon
 
     var body: some View {
         VStack {
+            PokemonAsyncImage(url: pokemon.imageUrl, size: 300)
+
             Text(pokemon.name.capitalized)
                 .font(.caption)
                 .foregroundColor(.primary)
                 .lineLimit(1)
-            PokemonAsyncImage(url: pokemon.imageUrl, size: 300)
+
+            HStack(spacing: 4) {
+                Text(pokemon.id)
+                    .foregroundStyle(.gray)
+                    .fontWeight(.semibold)
+                    .padding(.trailing)
+
+                ForEach(pokemon.types) { type in
+                    Image(systemName: type.imageName)
+                        .foregroundStyle(type.color)
+                }
+            }
+            .font(.caption)
         }
     }
 }
 
 #Preview {
-    PokemonPreviewView(pokemon: PokemonInfo.sampleData)
+    PokemonPreviewView(pokemon: Pokemon.sampleData)
 }

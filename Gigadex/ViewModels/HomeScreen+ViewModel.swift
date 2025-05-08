@@ -10,7 +10,10 @@ import SwiftUI
 extension HomeScreen {
     @MainActor @Observable
     class ViewModel {
-        var pokemonList = [PokemonInfo]()
+        var pokemonList = [Pokemon]()
+        var searchText = ""
+        var selectedGen: PokemonGen = .gen1
+
         var isShowingErrorAlert = false
         var errorInfo = ""
 
@@ -24,7 +27,7 @@ extension HomeScreen {
             }
         }
 
-        func loadPokemonDetails(for pokemon: PokemonInfo) async {
+        func loadPokemonDetails(for pokemon: Pokemon) async {
             do {
                 guard let index = pokemonList.firstIndex(where: { $0.id == pokemon.id }) else {
                     print("Unknown pokemon")
