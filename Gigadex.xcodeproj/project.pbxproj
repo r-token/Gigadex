@@ -94,6 +94,8 @@
 			);
 			mainGroup = F46DA63F2DCC4276005D2A6F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F46DA6492DCC4276005D2A6F /* Products */;
 			projectDirPath = "";
@@ -266,7 +268,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryantoken.Gigadex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Debug;
@@ -291,7 +293,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryantoken.Gigadex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
 			name = Release;
