@@ -11,7 +11,9 @@ import SwiftUI
 struct GigadexApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeScreen()
+            NavigationStack {
+                HomeScreen()
+            }
         }
     }
 }

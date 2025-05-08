@@ -18,7 +18,7 @@ struct HomeScreen: View {
     }
 
     var body: some View {
-        List {
+        ScrollView([.vertical]) {
             Picker("Choose a gen", selection: $vm.selectedGen) {
                 ForEach(PokemonGen.allCases, id: \.self) {
                     Text($0.rawValue)
@@ -26,24 +26,28 @@ struct HomeScreen: View {
                 }
             }
             .pickerStyle(.menu)
+            .padding(.top)
             .onChange(of: vm.selectedGen) {
                 Task { @MainActor in
                     await vm.loadAllPokemon(for: vm.selectedGen)
                 }
             }
 
-            LazyHGrid(rows: [GridItem()], spacing: 16) {
-                ForEach(filteredPokemonList) { pokemon in
-                    Button(action: { print("Tapped \(pokemon.name)") }) {
-                        PokemonPreviewView(pokemon: pokemon)
+            ScrollView([.horizontal]) {
+                LazyHGrid(rows: [GridItem()], spacing: 16) {
+                    ForEach(filteredPokemonList) { pokemon in
+                        NavigationLink(destination: PokemonDetailScreen(pokemon: pokemon)) {
+                            PokemonPreviewView(pokemon: pokemon)
+                        }
+                        .buttonStyle(.plain)
+                        .task {
+                            await vm.loadPokemonDetails(for: pokemon)
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .task {
-                        await vm.loadPokemonDetails(for: pokemon)
-                    }
+                    .padding()
                 }
             }
-            .padding()
+            .frame(height: 500)
         }
         .searchable(text: $vm.searchText)
         .task {
