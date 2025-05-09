@@ -10,9 +10,20 @@
 		F4CCA4EF2DCC7AF7008BD88D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F4CCA4EE2DCC7AF7008BD88D /* README.md */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F4CCA92B2DCE875E008BD88D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F46DA6402DCC4276005D2A6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F46DA6472DCC4276005D2A6F;
+			remoteInfo = Gigadex;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		F46DA6482DCC4276005D2A6F /* Gigadex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gigadex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CCA4EE2DCC7AF7008BD88D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F4CCA9272DCE875E008BD88D /* GigadexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GigadexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -21,10 +32,22 @@
 			path = Gigadex;
 			sourceTree = "<group>";
 		};
+		F4CCA9282DCE875E008BD88D /* GigadexTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GigadexTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F46DA6452DCC4276005D2A6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4CCA9242DCE875E008BD88D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,6 +62,7 @@
 			children = (
 				F4CCA4EE2DCC7AF7008BD88D /* README.md */,
 				F46DA64A2DCC4276005D2A6F /* Gigadex */,
+				F4CCA9282DCE875E008BD88D /* GigadexTests */,
 				F46DA6492DCC4276005D2A6F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				F46DA6482DCC4276005D2A6F /* Gigadex.app */,
+				F4CCA9272DCE875E008BD88D /* GigadexTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -76,6 +101,29 @@
 			productReference = F46DA6482DCC4276005D2A6F /* Gigadex.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F4CCA9262DCE875E008BD88D /* GigadexTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4CCA92D2DCE875E008BD88D /* Build configuration list for PBXNativeTarget "GigadexTests" */;
+			buildPhases = (
+				F4CCA9232DCE875E008BD88D /* Sources */,
+				F4CCA9242DCE875E008BD88D /* Frameworks */,
+				F4CCA9252DCE875E008BD88D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4CCA92C2DCE875E008BD88D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F4CCA9282DCE875E008BD88D /* GigadexTests */,
+			);
+			name = GigadexTests;
+			packageProductDependencies = (
+			);
+			productName = GigadexTests;
+			productReference = F4CCA9272DCE875E008BD88D /* GigadexTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -88,6 +136,10 @@
 				TargetAttributes = {
 					F46DA6472DCC4276005D2A6F = {
 						CreatedOnToolsVersion = 16.3;
+					};
+					F4CCA9262DCE875E008BD88D = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = F46DA6472DCC4276005D2A6F;
 					};
 				};
 			};
@@ -108,6 +160,7 @@
 			projectRoot = "";
 			targets = (
 				F46DA6472DCC4276005D2A6F /* Gigadex */,
+				F4CCA9262DCE875E008BD88D /* GigadexTests */,
 			);
 		};
 /* End PBXProject section */
@@ -121,6 +174,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F4CCA9252DCE875E008BD88D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -131,7 +191,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F4CCA9232DCE875E008BD88D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F4CCA92C2DCE875E008BD88D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F46DA6472DCC4276005D2A6F /* Gigadex */;
+			targetProxy = F4CCA92B2DCE875E008BD88D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F46DA6512DCC4278005D2A6F /* Debug */ = {
@@ -305,6 +380,42 @@
 			};
 			name = Release;
 		};
+		F4CCA92E2DCE875E008BD88D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DJAHJZFYK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryantoken.GigadexTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gigadex.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gigadex";
+			};
+			name = Debug;
+		};
+		F4CCA92F2DCE875E008BD88D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DJAHJZFYK7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryantoken.GigadexTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gigadex.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gigadex";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -322,6 +433,15 @@
 			buildConfigurations = (
 				F46DA6542DCC4278005D2A6F /* Debug */,
 				F46DA6552DCC4278005D2A6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4CCA92D2DCE875E008BD88D /* Build configuration list for PBXNativeTarget "GigadexTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4CCA92E2DCE875E008BD88D /* Debug */,
+				F4CCA92F2DCE875E008BD88D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
