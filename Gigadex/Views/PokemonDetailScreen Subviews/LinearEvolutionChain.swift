@@ -24,10 +24,9 @@ struct LinearEvolutionChain: View {
                             .font(.title3)
 
                         if let condition = evolution.triggerCondition {
-                            Text(condition)
+                            Text(condition.replacingOccurrences(of: "-", with: " "))
                                 .font(.caption2)
                                 .multilineTextAlignment(.center)
-                                .frame(width: 70)
                         }
                     }
                     .padding(.horizontal, 5)
