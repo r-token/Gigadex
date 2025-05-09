@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovesView: View {
     let pokemon: Pokemon
+    @State private var movesAndTypes = [String: Type]() // move name: type
 
     var moves: [Move] {
         pokemon.details?.moves.filter { move in
@@ -18,7 +19,7 @@ struct MovesView: View {
         }.sorted(by: { $0.versionGroupDetails.first?.levelLearnedAt ?? 0 < $1.versionGroupDetails.first?.levelLearnedAt ?? 0 }) ?? []
     }
 
-    var backgroundColor: Color {
+    var defaultBackgroundColor: Color {
         pokemon.types.first?.color ?? .gray
     }
 
@@ -46,11 +47,14 @@ struct MovesView: View {
                     }
                     .padding(2)
                     .padding(.horizontal)
-                    .background(backgroundColor.opacity(0.7))
+                    .background(movesAndTypes[move.move.name]?.color ?? defaultBackgroundColor)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 .buttonStyle(.plain)
             }
+        }
+        .task {
+            await getMoveTypes(for: moves)
         }
     }
 
@@ -60,6 +64,21 @@ struct MovesView: View {
 
     private func moveName(_ move: Move) -> String {
         move.move.name.capitalized.replacingOccurrences(of: "-", with: " ")
+    }
+
+    private func getMoveTypes(for moves: [Move]) async {
+        for move in moves {
+            let moveName = move.move.name
+            do {
+                let moveDetail = try await API.fetchMoveDetails(for: moveName)
+                let moveType = Type(name: moveDetail.type.name)
+                withAnimation {
+                    movesAndTypes[moveName] = moveType
+                }
+            } catch {
+                print("Error mapping moves to types: \(error)")
+            }
+        }
     }
 }
 

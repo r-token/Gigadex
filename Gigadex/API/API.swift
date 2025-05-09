@@ -213,4 +213,43 @@ struct API {
             throw APIError("Unexpected response body, error: \(error.localizedDescription)")
         }
     }
+
+    // move can be the moveId or the string name of the move
+    static func fetchMoveDetails(for move: String) async throws -> MoveDetail {
+        let baseUrl = "https://pokeapi.co/api/v2"
+        guard var urlComponents = URLComponents(string: baseUrl) else {
+            throw APIError("Invalid server URL: \(baseUrl)")
+        }
+
+        // Build the URL for the API request
+        urlComponents.path.append("/move/\(move)")
+        guard let url = urlComponents.url else {
+            throw APIError("Invalid API endpoint: \(urlComponents)")
+        }
+
+        // Make the request
+        print("Fetching move details for \(move) at url: \(url)")
+        let urlRequest = URLRequest(url: url)
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+
+        // Validate the response
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError("API response was not an HTTP response")
+        }
+        guard httpResponse.statusCode == 200 else {
+            throw APIError("API request failed with status code: \(httpResponse.statusCode)")
+        }
+        if let contentType = httpResponse.value(forHTTPHeaderField: "content-type") {
+            guard contentType.lowercased().contains("application/json") else {
+                throw APIError("Unexpected content type: \(contentType)")
+            }
+        }
+
+        // Decode the response into our API type & return it
+        do {
+            return try JSONDecoder().decode(MoveDetail.self, from: data)
+        } catch {
+            throw APIError("Unexpected response body, error: \(error.localizedDescription)")
+        }
+    }
 }

@@ -67,7 +67,7 @@ struct Type: Identifiable {
             color = .purple
         case "dark":
             imageName = "moon.circle.fill"
-            color = .black
+            color = Color(UIColor.darkGray)
         case "fairy":
             imageName = "heart.circle.fill"
             color = .pink
