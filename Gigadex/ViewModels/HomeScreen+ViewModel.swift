@@ -5,6 +5,7 @@
 //  Created by Ryan Token on 5/7/25.
 //
 
+import Combine
 import SwiftUI
 
 extension HomeScreen {
@@ -17,6 +18,9 @@ extension HomeScreen {
         var isShowingErrorAlert = false
         var errorInfo = ""
 
+        private var cancellables = Set<AnyCancellable>()
+
+        // async/await version of loadAllPokemon
         func loadAllPokemon(for gen: PokemonGen) async {
             do {
                 pokemonList = try await API.Request.fetchAllPokemon(for: gen)
@@ -25,6 +29,23 @@ extension HomeScreen {
                 isShowingErrorAlert = true
                 errorInfo = error.localizedDescription
             }
+        }
+
+        // Combine version of loadAllPokemon
+        func loadAllPokemonWithCombine(for gen: PokemonGen) {
+            API.Request.pokemonPublisher(for: gen)
+                .receive(on: RunLoop.main)
+                .sink(
+                    receiveCompletion: { [weak self] completion in
+                        if case .failure(let error) = completion {
+                            self?.handleError(error, for: "gen \(gen)")
+                        }
+                    },
+                    receiveValue: { [weak self] pokemonList in
+                        self?.pokemonList = pokemonList
+                    }
+                )
+                .store(in: &cancellables)
         }
 
         func loadAllInfo(for pokemon: Pokemon) async {
@@ -107,6 +128,12 @@ extension HomeScreen {
                 isShowingErrorAlert = true
                 errorInfo = error.localizedDescription
             }
+        }
+
+        private func handleError(_ error: Error, for context: String) {
+            print("Error fetching \(context): \(error)")
+            isShowingErrorAlert = true
+            errorInfo = error.localizedDescription
         }
     }
 }

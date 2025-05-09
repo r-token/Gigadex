@@ -17,7 +17,8 @@ struct HomeScreen: View {
         }
         .searchable(text: $vm.searchText)
         .task {
-            await vm.loadAllPokemon(for: vm.selectedGen)
+            // await vm.loadAllPokemon(for: vm.selectedGen) // async/await
+            vm.loadAllPokemonWithCombine(for: vm.selectedGen) // combine
         }
 
         .alert(isPresented: $vm.isShowingErrorAlert) {
