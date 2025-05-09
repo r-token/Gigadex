@@ -20,7 +20,7 @@ struct PokemonPreviewView: View {
                 .lineLimit(1)
 
             HStack(spacing: 4) {
-                Text(pokemon.id)
+                Text("#\(pokemon.id)")
                     .foregroundStyle(.gray)
                     .fontWeight(.semibold)
                     .padding(.trailing)

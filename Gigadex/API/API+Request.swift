@@ -1,5 +1,5 @@
 //
-//  API+Requests.swift
+//  API+Request.swift
 //  Gigadex
 //
 //  Created by Ryan Token on 5/9/25.
@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 extension API {
-    struct Request {
+    struct Request: CoreAPI {
         // MARK: ASYNC/AWAIT METHODS
         static func fetchAllPokemon(for gen: PokemonGen) async throws -> [Pokemon] {
             let queryItems = try queryItemsForGeneration(gen)

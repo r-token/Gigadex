@@ -22,7 +22,7 @@ struct PokemonSummaryHeader: View {
                         Text(pokemon.name)
                             .font(.title)
 
-                        Text("Pokédex Number \(pokemon.id)")
+                        Text("Pokédex #\(pokemon.id)")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                     }

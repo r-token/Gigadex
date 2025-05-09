@@ -15,6 +15,13 @@ struct MovesView: View {
         pokemon.types.first?.color ?? .gray
     }
 
+    private let api: CoreAPI.Type
+
+    init(pokemon: Pokemon, api: CoreAPI.Type = API.Request.self) {
+        self.pokemon = pokemon
+        self.api = api
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Learned Moves")
@@ -40,7 +47,7 @@ struct MovesView: View {
         for move in moves {
             let moveName = move.move.name
             do {
-                let moveDetail = try await API.Request.fetchMoveDetails(for: moveName)
+                let moveDetail = try await api.fetchMoveDetails(for: moveName)
                 let moveType = Type(name: moveDetail.type.name)
                 withAnimation {
                     movesAndTypes[moveName] = moveType

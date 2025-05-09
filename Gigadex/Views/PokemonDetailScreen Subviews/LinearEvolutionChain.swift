@@ -35,15 +35,12 @@ struct LinearEvolutionChain: View {
                 // Show the Pokémon
                 VStack {
                     PokemonAsyncImage(url: evolution.imageUrl, size: 150)
-                        .opacity(evolution.name == pokemon.name ? 1.0 : 0.7)
 
                     Text(evolution.name)
                         .font(.callout)
                         .fontWeight(evolution.name == pokemon.name ? .bold : .regular)
                 }
                 .padding(10)
-                .background(evolution.name == pokemon.name ?
-                            Color.blue.opacity(0.1) : Color.clear)
                 .cornerRadius(10)
             }
         }
