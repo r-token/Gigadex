@@ -13,13 +13,19 @@ struct Type: Identifiable {
     var imageName: String
     var color: Color
 
+    var unstyledImageName: String {
+        imageName
+            .replacingOccurrences(of: ".circle", with: "")
+            .replacingOccurrences(of: ".fill", with: "")
+    }
+
     init(name: String) {
         self.name = name
 
         switch name.localizedLowercase {
         case "normal":
             imageName = "circle.circle.fill"
-            color = .gray
+            color = Color(UIColor.lightGray)
         case "fighting":
             imageName = "figure.kickboxing.circle.fill"
             color = .red
@@ -34,7 +40,7 @@ struct Type: Identifiable {
             color = .brown
         case "rock":
             imageName = "mountain.2.circle.fill"
-            color = .white
+            color = Color(UIColor.brown)
         case "bug":
             imageName = "ladybug.circle.fill"
             color = .green
