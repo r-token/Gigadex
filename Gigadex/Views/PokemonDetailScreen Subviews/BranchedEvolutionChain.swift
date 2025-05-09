@@ -56,14 +56,11 @@ struct BranchedEvolutionChain: View {
                         }
                         .padding()
                         .cornerRadius(10)
-                        .focusable(true)
                     }
                 }
                 .padding()
-                .focusable(true)
             }
         }
-        .focusable(true)
     }
 }
 

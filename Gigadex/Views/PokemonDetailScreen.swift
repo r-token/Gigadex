@@ -14,6 +14,12 @@ struct PokemonDetailScreen: View {
         ScrollView {
             PokemonSummaryHeader(pokemon: pokemon)
             EvolutionChainView(pokemon: pokemon)
+            HStack(alignment: .top) {
+                StatsView(pokemon: pokemon)
+                    .frame(maxWidth: .infinity)
+                MovesView(pokemon: pokemon)
+                    .frame(maxWidth: .infinity)
+            }
         }
     }
 }

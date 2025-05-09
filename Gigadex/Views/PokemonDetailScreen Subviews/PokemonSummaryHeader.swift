@@ -46,10 +46,18 @@ struct PokemonSummaryHeader: View {
                     .lineLimit(nil)
                     .multilineTextAlignment(.leading)
 
+                HStack(spacing: 16) {
+                    Text("Abilities:")
+                        .fontWeight(.semibold)
+
+                    AbilitiesView(pokemon: pokemon)
+                }
+
                 Spacer()
             }
+            .padding(.top)
         }
-        .focusable(true)
+        .focusable()
     }
 }
 

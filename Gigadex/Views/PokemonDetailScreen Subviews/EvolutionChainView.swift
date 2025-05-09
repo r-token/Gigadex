@@ -30,7 +30,6 @@ struct EvolutionChainView: View {
                     }
                 }
                 .padding(.vertical)
-                .focusable(true)
             } else if isProcessingEvolution {
                 ProgressView()
                     .frame(maxWidth: .infinity, alignment: .center)

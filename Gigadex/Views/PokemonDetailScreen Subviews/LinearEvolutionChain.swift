@@ -46,7 +46,6 @@ struct LinearEvolutionChain: View {
                 .background(evolution.name == pokemon.name ?
                             Color.blue.opacity(0.1) : Color.clear)
                 .cornerRadius(10)
-                .focusable(true)
             }
         }
         .padding()
