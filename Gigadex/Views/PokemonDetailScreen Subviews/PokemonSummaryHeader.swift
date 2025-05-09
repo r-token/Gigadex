@@ -12,7 +12,7 @@ struct PokemonSummaryHeader: View {
 
     var body: some View {
         HStack {
-            PokemonAsyncImage(url: pokemon.imageUrl, size: 500)
+            PokemonAsyncImage(url: pokemon.imageUrl, size: 500, pokemonName: pokemon.name)
 
             Spacer()
 
@@ -39,6 +39,7 @@ struct PokemonSummaryHeader: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                         }
+                        .typeIconAccessibility(for: type)
                     }
                 }
 

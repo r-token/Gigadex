@@ -34,7 +34,7 @@ struct LinearEvolutionChain: View {
 
                 // Show the Pokémon
                 VStack {
-                    PokemonAsyncImage(url: evolution.imageUrl, size: 150)
+                    PokemonAsyncImage(url: evolution.imageUrl, size: 150, pokemonName: evolution.name)
 
                     Text(evolution.name)
                         .font(.callout)

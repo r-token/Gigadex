@@ -15,7 +15,7 @@ struct BranchedEvolutionChain: View {
     var body: some View {
         // Base Pokemon
         VStack {
-            PokemonAsyncImage(url: basePokemon.imageUrl, size: 150)
+            PokemonAsyncImage(url: basePokemon.imageUrl, size: 150, pokemonName: selectedPokemon.name)
                 .padding(.bottom, 5)
 
             Text(basePokemon.name)
@@ -44,7 +44,7 @@ struct BranchedEvolutionChain: View {
                     .frame(height: 40)
                     .padding(.horizontal, 5)
 
-                    PokemonAsyncImage(url: evolution.imageUrl, size: 150)
+                    PokemonAsyncImage(url: evolution.imageUrl, size: 150, pokemonName: evolution.name)
 
                     Text(evolution.name)
                         .font(.caption)

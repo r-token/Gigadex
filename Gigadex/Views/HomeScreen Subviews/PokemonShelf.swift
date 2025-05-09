@@ -34,6 +34,12 @@ struct PokemonShelf: View {
             }
         }
         .frame(height: 500)
+        .accessibilityLabel("Pokémon collection")
+        .accessibilityHint(
+            filteredPokemonList.isEmpty ?
+                "No Pokémon found. Try changing your search" :
+                "Swipe left or right to browse. Showing \(filteredPokemonList.count) Pokémon"
+        )
     }
 }
 

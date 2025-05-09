@@ -17,6 +17,9 @@ struct GenPicker: View {
                     .tag($0)
             }
         }
+        .accessibilityLabel("Pokémon generation selector")
+        .accessibilityHint("Choose a generation to filter Pokémon. Currently showing \(vm.selectedGen.rawValue)")
+
         .onChange(of: vm.selectedGen) {
             Task { @MainActor in
                 await vm.loadAllPokemon(for: vm.selectedGen)

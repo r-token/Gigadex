@@ -10,10 +10,12 @@ import SwiftUI
 struct PokemonAsyncImage: View {
     let url: URL?
     let imageSize: CGFloat
+    let pokemonName: String // for accessibility
 
-    init(url: URL?, size: CGFloat = 100) {
+    init(url: URL?, size: CGFloat = 100, pokemonName: String) {
         self.url = url
         self.imageSize = size
+        self.pokemonName = pokemonName
     }
 
     @State private var retryCount = 0
@@ -29,6 +31,7 @@ struct PokemonAsyncImage: View {
                 ZStack {
                     Color.gray.opacity(0.2)
                     ProgressView()
+                        .accessibilityLabel("Loading Pokémon image")
                 }
                 .frame(width: imageSize, height: imageSize)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -40,6 +43,7 @@ struct PokemonAsyncImage: View {
                     .frame(width: imageSize, height: imageSize)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .transition(.opacity)
+                    .accessibilityLabel(pokemonName)
 
             case .failure:
                 Group {
@@ -59,6 +63,7 @@ struct PokemonAsyncImage: View {
                                 .padding(.top, 5)
                             }
                         }
+                        .accessibilityLabel("Failed to load Pokémon image")
                     }
                 }
                 .frame(width: imageSize, height: imageSize)
@@ -69,6 +74,7 @@ struct PokemonAsyncImage: View {
                     .frame(width: imageSize, height: imageSize)
                     .background(Color.gray.opacity(0.2))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .accessibilityLabel("Unknown image state")
             }
         }
     }
@@ -97,5 +103,8 @@ struct PokemonAsyncImage: View {
 }
 
 #Preview {
-    PokemonAsyncImage(url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"))
+    PokemonAsyncImage(
+        url: URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png"),
+        pokemonName: "Ditto"
+    )
 }
