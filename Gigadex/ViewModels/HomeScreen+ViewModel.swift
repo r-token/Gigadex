@@ -69,6 +69,7 @@ extension HomeScreen {
         }
 
         func loadAllInfo(for pokemon: Pokemon) async {
+            print("Loading all info for \(pokemon.name)")
             await withTaskGroup { group in
                 group.addTask {
                     await self.loadPokemonDetails(for: pokemon)

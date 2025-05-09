@@ -9,17 +9,36 @@ import SwiftUI
 
 struct PokemonDetailScreen: View {
     let pokemon: Pokemon
-    
+
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.resetFocus) private var resetFocus
+    @State private var scrollViewProxy: ScrollViewProxy?
+
     var body: some View {
-        ScrollView {
-            PokemonSummaryHeader(pokemon: pokemon)
-            EvolutionChainView(pokemon: pokemon)
-            HStack(alignment: .top) {
-                StatsView(pokemon: pokemon)
-                    .frame(maxWidth: .infinity)
-                MovesView(pokemon: pokemon)
-                    .frame(maxWidth: .infinity)
+        ScrollViewReader { proxy in
+            ScrollView {
+                PokemonSummaryHeader(pokemon: pokemon)
+                    .id("top")
+                    .focusable()
+
+                EvolutionChainView(pokemon: pokemon)
+
+                HStack(alignment: .top) {
+                    StatsView(pokemon: pokemon)
+                        .frame(maxWidth: .infinity)
+                    MovesView(pokemon: pokemon)
+                        .frame(maxWidth: .infinity)
+                }
             }
+            .onAppear {
+                scrollViewProxy = proxy
+            }
+        }
+        .onExitCommand {
+            withAnimation {
+                scrollViewProxy?.scrollTo("top", anchor: .top)
+            }
+            dismiss()
         }
     }
 }

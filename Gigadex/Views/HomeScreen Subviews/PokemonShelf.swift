@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PokemonShelf: View {
     @Binding var vm: HomeScreen.ViewModel
-    @State private var loadedPokemonIds = Set<String>()
 
     var filteredPokemonList: [Pokemon] {
         vm.pokemonList.filter {

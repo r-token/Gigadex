@@ -35,7 +35,6 @@ struct API {
 
         // Make request
         let urlRequest = URLRequest(url: url)
-        print("Fetching from: \(url)")
 
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
 
@@ -81,7 +80,6 @@ struct API {
 
         // Make request
         let urlRequest = URLRequest(url: url)
-        print("Fetching from: \(url)")
 
         return URLSession.shared.dataTaskPublisher(for: urlRequest)
             .tryMap { data, response in
