@@ -10,10 +10,6 @@ import SwiftUI
 struct StatsView: View {
     let pokemon: Pokemon
 
-    var stats: [Stat] {
-        pokemon.details?.stats ?? []
-    }
-
     var body: some View {
         VStack(alignment: .leading) {
             Text("Stats")
@@ -21,18 +17,18 @@ struct StatsView: View {
 
             HStack {
                 VStack(alignment: .leading) {
-                    ForEach(stats, id: \.stat.url) { stat in
+                    ForEach(pokemon.stats, id: \.stat.url) { stat in
                         Text(cleanStat(stat))
                     }
                 }
                 VStack {
-                    ForEach(stats, id: \.stat.url) { stat in
+                    ForEach(pokemon.stats, id: \.stat.url) { stat in
                         ProgressView(value: cleanProgress(stat))
                             .progressViewStyle(.linear)
                     }
                 }
                 VStack(alignment: .trailing) {
-                    ForEach(stats, id: \.stat.url) { stat in
+                    ForEach(pokemon.stats, id: \.stat.url) { stat in
                         Text("\(stat.baseStat)")
                     }
                 }

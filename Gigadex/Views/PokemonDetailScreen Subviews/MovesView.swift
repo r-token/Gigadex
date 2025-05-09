@@ -11,14 +11,6 @@ struct MovesView: View {
     let pokemon: Pokemon
     @State private var movesAndTypes = [String: Type]() // move name: type
 
-    var moves: [Move] {
-        pokemon.details?.moves.filter { move in
-            move.versionGroupDetails.contains { detail in
-                detail.moveLearnMethod.name == "level-up"
-            }
-        }.sorted(by: { $0.versionGroupDetails.first?.levelLearnedAt ?? 0 < $1.versionGroupDetails.first?.levelLearnedAt ?? 0 }) ?? []
-    }
-
     var defaultBackgroundColor: Color {
         pokemon.types.first?.color ?? .gray
     }
@@ -28,7 +20,7 @@ struct MovesView: View {
             Text("Learned Moves")
                 .font(.title3)
             
-            ForEach(moves, id: \.move.url) { move in
+            ForEach(pokemon.learnedMoves, id: \.move.url) { move in
                 Button(action: {}) {
                     HStack {
                         Group {
@@ -54,7 +46,7 @@ struct MovesView: View {
             }
         }
         .task {
-            await getMoveTypes(for: moves)
+            await setMoveTypes(for: pokemon.learnedMoves)
         }
     }
 
@@ -66,7 +58,7 @@ struct MovesView: View {
         move.move.name.capitalized.replacingOccurrences(of: "-", with: " ")
     }
 
-    private func getMoveTypes(for moves: [Move]) async {
+    private func setMoveTypes(for moves: [Move]) async {
         for move in moves {
             let moveName = move.move.name
             do {

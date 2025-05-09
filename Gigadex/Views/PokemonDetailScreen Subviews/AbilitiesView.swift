@@ -10,17 +10,13 @@ import SwiftUI
 struct AbilitiesView: View {
     let pokemon: Pokemon
 
-    var abilities: [Ability] {
-        pokemon.details?.abilities ?? []
-    }
-
     var backgroundColor: Color {
         pokemon.types.first?.color ?? .gray
     }
 
     var body: some View {
         HStack(spacing: 16) {
-            ForEach(abilities, id: \.ability.url) { ability in
+            ForEach(pokemon.abilities, id: \.ability.url) { ability in
                 Text(cleanAbility(ability))
                     .fontWeight(.semibold)
                     .padding(2)

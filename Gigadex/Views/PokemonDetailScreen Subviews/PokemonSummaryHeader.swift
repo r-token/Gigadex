@@ -10,24 +10,6 @@ import SwiftUI
 struct PokemonSummaryHeader: View {
     let pokemon: Pokemon
 
-    // height is returned in decimeters
-    // 1 decimeter = 0.32808399 feet
-    var formattedHeight: String {
-        guard let decimeters = pokemon.details?.height else { return "Unknown" }
-        let feet = Double(decimeters) * 0.32808399
-        let roundedFeet = (feet * 10).rounded() / 10
-        return String(format: "%.1f", roundedFeet)
-    }
-
-    // weight is returned in hectograms
-    // 1 hectogram = 0.22046226 pounds
-    var formattedWeight: String {
-        guard let hectograms = pokemon.details?.weight else { return "Unknown" }
-        let pounds = Double(hectograms) * 0.22046226
-        let roundedPounds = (pounds * 10).rounded() / 10
-        return String(format: "%.1f", roundedPounds)
-    }
-
     var body: some View {
         HStack {
             PokemonAsyncImage(url: pokemon.imageUrl, size: 500)
@@ -65,8 +47,8 @@ struct PokemonSummaryHeader: View {
                     .multilineTextAlignment(.leading)
 
                 VStack(alignment: .leading) {
-                    Text("Height: \(formattedHeight) feet")
-                    Text("Weight: \(formattedWeight) lbs")
+                    Text("Height: \(pokemon.formattedHeight) feet")
+                    Text("Weight: \(pokemon.formattedWeight) lbs")
                 }
 
                 HStack(spacing: 16) {

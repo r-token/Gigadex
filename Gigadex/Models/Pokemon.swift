@@ -30,6 +30,44 @@ struct Pokemon: Identifiable {
         return descriptionWithNewLines.replacingOccurrences(of: "\n", with: " ")
     }
 
+    // height is returned in decimeters
+    // 1 decimeter = 0.32808399 feet
+    var height: Double {
+        guard let decimeters = details?.height else { return 0 }
+        let feet = Double(decimeters) * 0.32808399
+        return (feet * 10).rounded() / 10
+    }
+    var formattedHeight: String {
+        return String(format: "%.1f", height)
+    }
+
+    // weight is returned in hectograms
+    // 1 hectogram = 0.22046226 pounds
+    var weight: Double {
+        guard let hectograms = details?.weight else { return 0 }
+        let pounds = Double(hectograms) * 0.22046226
+        return (pounds * 10).rounded() / 10
+    }
+    var formattedWeight: String {
+        return String(format: "%.1f", weight)
+    }
+
+    var abilities: [Ability] {
+        details?.abilities ?? []
+    }
+
+    var stats: [Stat] {
+        details?.stats ?? []
+    }
+
+    var learnedMoves: [Move] {
+        details?.moves.filter { move in
+            move.versionGroupDetails.contains { detail in
+                detail.moveLearnMethod.name == "level-up"
+            }
+        }.sorted(by: { $0.versionGroupDetails.first?.levelLearnedAt ?? 0 < $1.versionGroupDetails.first?.levelLearnedAt ?? 0 }) ?? []
+    }
+
     var evolutionPosition: Int {
         return evolutionChainSequence.firstIndex(where: { $0.name.lowercased() == name.lowercased() }) ?? 0
     }
