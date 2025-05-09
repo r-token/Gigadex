@@ -12,8 +12,23 @@ extension HomeScreen {
     @MainActor @Observable
     class ViewModel {
         var pokemonList = [Pokemon]()
-        var searchText = ""
         var selectedGen: PokemonGen = .gen1
+
+        private var searchDebounceTimer: Timer?
+        var debouncedSearchText = ""
+        var searchText = "" {
+            didSet {
+                searchDebounceTimer?.invalidate()
+                searchDebounceTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+                    guard let self else { return }
+                    Task { @MainActor in
+                        withAnimation {
+                            self.debouncedSearchText = self.searchText
+                        }
+                    }
+                }
+            }
+        }
 
         var isShowingErrorAlert = false
         var errorInfo = ""

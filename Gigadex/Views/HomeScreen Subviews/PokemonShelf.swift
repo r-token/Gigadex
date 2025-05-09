@@ -13,8 +13,8 @@ struct PokemonShelf: View {
 
     var filteredPokemonList: [Pokemon] {
         vm.pokemonList.filter {
-            vm.searchText.isEmpty ||
-            $0.name.localizedStandardContains(vm.searchText)
+            vm.debouncedSearchText.isEmpty ||
+            $0.name.localizedStandardContains(vm.debouncedSearchText)
         }
     }
 
