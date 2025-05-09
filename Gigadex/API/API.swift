@@ -41,7 +41,7 @@ struct API {
             offset = 386
         case .gen5:
             limit = 156
-            offset = 493
+            offset = 494
         case .gen6:
             limit = 72
             offset = 649

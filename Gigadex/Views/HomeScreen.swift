@@ -8,46 +8,12 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @State private var vm = ViewModel()
-
-    var filteredPokemonList: [Pokemon] {
-        vm.pokemonList.filter {
-            vm.searchText.isEmpty ||
-            $0.name.localizedStandardContains(vm.searchText)
-        }
-    }
+    @State var vm = ViewModel()
 
     var body: some View {
-        ScrollView([.vertical]) {
-            Picker("Choose a gen", selection: $vm.selectedGen) {
-                ForEach(PokemonGen.allCases, id: \.self) {
-                    Text($0.rawValue)
-                        .tag($0)
-                }
-            }
-            .pickerStyle(.menu)
-            .padding(.top)
-            .onChange(of: vm.selectedGen) {
-                Task { @MainActor in
-                    await vm.loadAllPokemon(for: vm.selectedGen)
-                }
-            }
-
-            ScrollView([.horizontal]) {
-                LazyHGrid(rows: [GridItem()], spacing: 16) {
-                    ForEach(filteredPokemonList) { pokemon in
-                        NavigationLink(destination: PokemonDetailScreen(pokemon: pokemon)) {
-                            PokemonPreviewView(pokemon: pokemon)
-                        }
-                        .buttonStyle(.plain)
-                        .task {
-                            await vm.loadPokemonDetails(for: pokemon)
-                        }
-                    }
-                    .padding()
-                }
-            }
-            .frame(height: 500)
+        ScrollView {
+            GenPicker(vm: $vm)
+            PokemonShelf(vm: $vm)
         }
         .searchable(text: $vm.searchText)
         .task {
