@@ -22,39 +22,24 @@ struct API {
             throw APIError("Invalid server URL: \(baseUrl)")
         }
 
-        var limit: Int
-        var offset: Int
+        let genRanges: [PokemonGen: (start: Int, end: Int)] = [
+            .gen1: (1, 151),
+            .gen2: (152, 251),
+            .gen3: (252, 386),
+            .gen4: (387, 493),
+            .gen5: (494, 649),
+            .gen6: (650, 721),
+            .gen7: (722, 809),
+            .gen8: (810, 905),
+            .gen9: (906, 1025)
+        ]
 
-        // TODO: Check if there's some math we can do here instead
-        switch gen {
-        case .gen1:
-            limit = 151
-            offset = 0
-        case .gen2:
-            limit = 100
-            offset = 151
-        case .gen3:
-            limit = 135
-            offset = 251
-        case .gen4:
-            limit = 107
-            offset = 386
-        case .gen5:
-            limit = 156
-            offset = 494
-        case .gen6:
-            limit = 72
-            offset = 649
-        case .gen7:
-            limit = 88
-            offset = 721
-        case .gen8:
-            limit = 96
-            offset = 809
-        case .gen9:
-            limit = 120
-            offset = 905
+        guard let range = genRanges[gen] else {
+            throw APIError("Invalid generation: \(gen)")
         }
+
+        let offset = range.start - 1
+        let limit = range.end - range.start + 1
 
         // Build the URL for the API request
         urlComponents.path.append("/pokemon")
