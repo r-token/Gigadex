@@ -29,37 +29,34 @@ struct BranchedEvolutionChain: View {
             .font(.title3)
 
         // All branching evolutions
-        ScrollView(.horizontal){
-            HStack {
-                LazyHGrid(rows: [GridItem()], spacing: 20) {
-                    ForEach(evolutions) { evolution in
-                        VStack {
-                            Group {
-                                if let evoCondition = evolution.triggerCondition {
-                                    Text(evoCondition)
-                                } else {
-                                    Text("Unknown")
-                                }
-                            }
-                            .font(.caption2)
-                            .multilineTextAlignment(.center)
-                            .frame(height: 40)
-                            .padding(.horizontal, 5)
-
-                            PokemonAsyncImage(url: evolution.imageUrl, size: 150)
-
-                            Text(evolution.name)
-                                .font(.caption)
-                                .fontWeight(evolution.name == selectedPokemon.name ? .bold : .regular)
+        LazyHGrid(rows: [GridItem()], spacing: 20) {
+            ForEach(evolutions) { evolution in
+                VStack {
+                    Group {
+                        if let evoCondition = evolution.triggerCondition {
+                            Text(evoCondition)
+                        } else {
+                            Text("Unknown")
                         }
-                        .padding()
-                        .cornerRadius(10)
                     }
+                    .font(.caption2)
+                    .multilineTextAlignment(.center)
+                    .frame(height: 40)
+                    .padding(.horizontal, 5)
+
+                    PokemonAsyncImage(url: evolution.imageUrl, size: 150)
+
+                    Text(evolution.name)
+                        .font(.caption)
+                        .fontWeight(evolution.name == selectedPokemon.name ? .bold : .regular)
                 }
                 .padding()
+                .cornerRadius(10)
+
             }
         }
-
+        .padding()
+        .focusable()
     }
 }
 
