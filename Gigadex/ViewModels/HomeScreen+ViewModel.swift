@@ -19,7 +19,7 @@ extension HomeScreen {
 
         func loadAllPokemon(for gen: PokemonGen) async {
             do {
-                pokemonList = try await API.fetchAllPokemon(for: gen)
+                pokemonList = try await API.Request.fetchAllPokemon(for: gen)
             } catch {
                 print("Error fetching pokemon for gen \(gen): \(error)")
                 isShowingErrorAlert = true
@@ -48,7 +48,7 @@ extension HomeScreen {
                 // Don't hit the API again if we have already fetched details for this pokemon
                 // guard pokemonList[index].details == nil else { return }
 
-                let details = try await API.fetchDetails(for: pokemon.id)
+                let details = try await API.Request.fetchDetails(for: pokemon.id)
 
                 if let imageUrlString = details.sprites.other?.officialArtwork?.frontDefault,
                    !imageUrlString.isEmpty {
@@ -71,7 +71,7 @@ extension HomeScreen {
                 // Don't hit the API again if we have already fetched species info for this pokemon
                 // guard pokemonList[index].species == nil else { return }
 
-                let species = try await API.fetchSpeciesInfo(for: pokemon.id)
+                let species = try await API.Request.fetchSpeciesInfo(for: pokemon.id)
                 pokemonList[index].species = species
             } catch {
                 print("Error fetching species info for \(pokemon.name): \(error)")
@@ -100,7 +100,7 @@ extension HomeScreen {
                 let evolutionChainUrl = species.evolutionChain.url
                 let chainId = Utils.getId(from: evolutionChainUrl)
 
-                let evolutionChain = try await API.fetchEvolutionChain(for: chainId)
+                let evolutionChain = try await API.Request.fetchEvolutionChain(for: chainId)
                 pokemonList[index].evolutionChain = evolutionChain
             } catch {
                 print("Error fetching evolution chain for \(pokemon.name): \(error)")

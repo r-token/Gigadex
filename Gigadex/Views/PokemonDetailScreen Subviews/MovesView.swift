@@ -62,7 +62,7 @@ struct MovesView: View {
         for move in moves {
             let moveName = move.move.name
             do {
-                let moveDetail = try await API.fetchMoveDetails(for: moveName)
+                let moveDetail = try await API.Request.fetchMoveDetails(for: moveName)
                 let moveType = Type(name: moveDetail.type.name)
                 withAnimation {
                     movesAndTypes[moveName] = moveType
