@@ -1,0 +1,72 @@
+//
+//  BranchedEvolutionChain.swift
+//  Gigadex
+//
+//  Created by Ryan Token on 5/8/25.
+//
+
+import SwiftUI
+
+struct BranchedEvolutionChain: View {
+    let selectedPokemon: Pokemon
+    let basePokemon: PokemonEvolution
+    let evolutions: [PokemonEvolution]
+
+    var body: some View {
+        // Base Pokemon
+        VStack {
+            PokemonAsyncImage(url: basePokemon.imageUrl, size: 150)
+                .opacity(basePokemon.name == selectedPokemon.name ? 1.0 : 0.7)
+                .padding(.bottom, 5)
+
+            Text(basePokemon.name)
+                .font(.callout)
+                .fontWeight(basePokemon.name == selectedPokemon.name ? .bold : .regular)
+        }
+        .padding()
+
+        Image(systemName: "arrow.down")
+            .foregroundColor(.gray)
+            .font(.title3)
+
+        // All branching evolutions
+        ScrollView(.horizontal){
+            HStack {
+                LazyHGrid(rows: [GridItem()], spacing: 20) {
+                    ForEach(evolutions) { evolution in
+                        VStack {
+                            Group {
+                                if let evoCondition = evolution.triggerCondition {
+                                    Text(evoCondition)
+                                } else {
+                                    Text("Unknown")
+                                }
+                            }
+                            .font(.caption2)
+                            .multilineTextAlignment(.center)
+                            .frame(height: 40)
+                            .padding(.horizontal, 5)
+
+                            PokemonAsyncImage(url: evolution.imageUrl, size: 150)
+                                .opacity(evolution.name == selectedPokemon.name ? 1.0 : 0.7)
+
+                            Text(evolution.name)
+                                .font(.caption)
+                                .fontWeight(evolution.name == selectedPokemon.name ? .bold : .regular)
+                        }
+                        .padding()
+                        .cornerRadius(10)
+                        .focusable(true)
+                    }
+                }
+                .padding()
+                .focusable(true)
+            }
+        }
+        .focusable(true)
+    }
+}
+
+#Preview {
+    BranchedEvolutionChain(selectedPokemon: Pokemon.sampleData, basePokemon: PokemonEvolution.sampleData, evolutions: [])
+}

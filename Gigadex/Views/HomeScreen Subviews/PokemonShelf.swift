@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PokemonShelf: View {
     @Binding var vm: HomeScreen.ViewModel
+    @State private var loadedPokemonIds = Set<String>()
 
     var filteredPokemonList: [Pokemon] {
         vm.pokemonList.filter {
@@ -18,7 +19,7 @@ struct PokemonShelf: View {
     }
 
     var body: some View {
-        ScrollView([.horizontal]) {
+        ScrollView(.horizontal) {
             LazyHGrid(rows: [GridItem()], spacing: 0) {
                 ForEach(filteredPokemonList) { pokemon in
                     NavigationLink(destination: PokemonDetailScreen(pokemon: pokemon)) {
@@ -26,13 +27,18 @@ struct PokemonShelf: View {
                     }
                     .buttonStyle(.plain)
                     .task {
-                        await vm.loadPokemonDetails(for: pokemon)
+                        await vm.loadAllInfo(for: pokemon)
                     }
                 }
                 .padding()
             }
         }
         .frame(height: 500)
+    }
+
+    private func isDataLoaded(for pokemon: Pokemon) -> Bool {
+        return loadedPokemonIds.contains(pokemon.id) ||
+        (pokemon.details != nil && pokemon.species != nil && pokemon.evolutionChain != nil)
     }
 }
 

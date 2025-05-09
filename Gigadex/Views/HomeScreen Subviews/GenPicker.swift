@@ -17,8 +17,6 @@ struct GenPicker: View {
                     .tag($0)
             }
         }
-        .pickerStyle(.menu)
-        .padding(.top)
         .onChange(of: vm.selectedGen) {
             Task { @MainActor in
                 await vm.loadAllPokemon(for: vm.selectedGen)

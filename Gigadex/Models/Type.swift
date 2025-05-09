@@ -16,7 +16,7 @@ struct Type: Identifiable {
     init(name: String) {
         self.name = name
 
-        switch name {
+        switch name.localizedLowercase {
         case "normal":
             imageName = "circle.circle.fill"
             color = .gray

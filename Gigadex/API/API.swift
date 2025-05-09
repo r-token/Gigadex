@@ -96,8 +96,8 @@ struct API {
 
         var pokemonList: [Pokemon] = []
         for pokemon in pokemonSummaryWrapper.results {
-            let id = getPokeId(from: pokemon.url)
-            let pokemon = Pokemon(id: id, name: pokemon.name)
+            let id = Utils.getId(from: pokemon.url)
+            let pokemon = Pokemon(id: id, name: pokemon.name.capitalized)
             pokemonList.append(pokemon)
         }
         return pokemonList
@@ -116,7 +116,6 @@ struct API {
         }
 
         // Make the request
-        print("Fetching details for pokemon \(pokemonId) with url \(url)")
         let urlRequest = URLRequest(url: url)
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
 
@@ -141,9 +140,77 @@ struct API {
         }
     }
 
-    private static func getPokeId(from url: String) -> String {
-        let cleanUrl = url.hasSuffix("/") ? String(url.dropLast()) : url
-        let components = cleanUrl.components(separatedBy: "/")
-        return components.last ?? ""
+    static func fetchSpeciesInfo(for pokemonId: String) async throws -> PokemonSpecies {
+        let baseUrl = "https://pokeapi.co/api/v2"
+        guard var urlComponents = URLComponents(string: baseUrl) else {
+            throw APIError("Invalid server URL: \(baseUrl)")
+        }
+
+        // Build the URL for the API request
+        urlComponents.path.append("/pokemon-species/\(pokemonId)")
+        guard let url = urlComponents.url else {
+            throw APIError("Invalid API endpoint: \(urlComponents)")
+        }
+
+        // Make the request
+        let urlRequest = URLRequest(url: url)
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+
+        // Validate the response
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError("API response was not an HTTP response")
+        }
+        guard httpResponse.statusCode == 200 else {
+            throw APIError("API request failed with status code: \(httpResponse.statusCode)")
+        }
+        if let contentType = httpResponse.value(forHTTPHeaderField: "content-type") {
+            guard contentType.lowercased().contains("application/json") else {
+                throw APIError("Unexpected content type: \(contentType)")
+            }
+        }
+
+        // Decode the response into our API type & return it
+        do {
+            return try JSONDecoder().decode(PokemonSpecies.self, from: data)
+        } catch {
+            throw APIError("Unexpected response body, error: \(error.localizedDescription)")
+        }
+    }
+
+    static func fetchEvolutionChain(for chainId: String) async throws -> EvolutionChain {
+        let baseUrl = "https://pokeapi.co/api/v2"
+        guard var urlComponents = URLComponents(string: baseUrl) else {
+            throw APIError("Invalid server URL: \(baseUrl)")
+        }
+
+        // Build the URL for the API request
+        urlComponents.path.append("/evolution-chain/\(chainId)")
+        guard let url = urlComponents.url else {
+            throw APIError("Invalid API endpoint: \(urlComponents)")
+        }
+
+        // Make the request
+        let urlRequest = URLRequest(url: url)
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+
+        // Validate the response
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw APIError("API response was not an HTTP response")
+        }
+        guard httpResponse.statusCode == 200 else {
+            throw APIError("API request failed with status code: \(httpResponse.statusCode)")
+        }
+        if let contentType = httpResponse.value(forHTTPHeaderField: "content-type") {
+            guard contentType.lowercased().contains("application/json") else {
+                throw APIError("Unexpected content type: \(contentType)")
+            }
+        }
+
+        // Decode the response into our API type & return it
+        do {
+            return try JSONDecoder().decode(EvolutionChain.self, from: data)
+        } catch {
+            throw APIError("Unexpected response body, error: \(error.localizedDescription)")
+        }
     }
 }

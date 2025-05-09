@@ -9,9 +9,12 @@ import SwiftUI
 
 struct PokemonDetailScreen: View {
     let pokemon: Pokemon
-
+    
     var body: some View {
-        Text("Hello, \(pokemon.name)")
+        ScrollView {
+            PokemonSummaryHeader(pokemon: pokemon)
+            EvolutionChainView(pokemon: pokemon)
+        }
     }
 }
 

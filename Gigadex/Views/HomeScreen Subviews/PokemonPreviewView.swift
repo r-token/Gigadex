@@ -14,7 +14,7 @@ struct PokemonPreviewView: View {
         VStack {
             PokemonAsyncImage(url: pokemon.imageUrl, size: 300)
 
-            Text(pokemon.name.capitalized)
+            Text(pokemon.name)
                 .font(.caption)
                 .foregroundColor(.primary)
                 .lineLimit(1)
