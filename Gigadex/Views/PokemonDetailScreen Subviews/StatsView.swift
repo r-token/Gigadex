@@ -25,8 +25,9 @@ struct StatsView: View {
                 // stat progress column
                 VStack {
                     ForEach(pokemon.stats, id: \.stat.url) { stat in
-                        ProgressView(value: cleanProgress(stat))
-                            .progressViewStyle(.linear)
+                        // I was using ProgressView with the `.linear` style originally
+                        // But saw weird rerendering behavior while scrolling
+                        StableProgressView(value: cleanProgress(stat))
                     }
                 }
                 // stat number column
