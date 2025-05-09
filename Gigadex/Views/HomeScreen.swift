@@ -19,6 +19,14 @@ struct HomeScreen: View {
         .task {
             await vm.loadAllPokemon(for: vm.selectedGen)
         }
+
+        .alert(isPresented: $vm.isShowingErrorAlert) {
+            Alert(
+                title: Text("Error Loading Pokémon"),
+                message: Text("Please try again later."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
 }
 
