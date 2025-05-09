@@ -27,7 +27,7 @@ struct Type: Identifiable {
             imageName = "circle.circle.fill"
             color = Color(UIColor.lightGray)
         case "fighting":
-            imageName = "figure.kickboxing.circle.fill"
+            imageName = "figure.boxing.circle.fill"
             color = .red
         case "flying":
             imageName = "bird.circle.fill"

@@ -54,6 +54,33 @@ struct MoveDetail: Codable {
         case target
         case type
     }
+
+    static let sampleData = MoveDetail(
+        id: 132,
+        name: "test-move",
+        accuracy: nil,
+        effectChance: nil,
+        pp: nil,
+        priority: 2,
+        power: nil,
+        contestCombos: nil,
+        contestEffect: nil,
+        contestType: nil,
+        damageClass: NamedAPIResource(name: "", url: ""),
+        effectChanges: [],
+        effectEntries: [],
+        flavorTextEntries: [],
+        generation: NamedAPIResource(name: "", url: ""),
+        learnedByPokemon: [],
+        machines: [],
+        meta: nil,
+        names: [],
+        pastValues: [],
+        statChanges: [],
+        superContestEffect: nil,
+        target: NamedAPIResource(name: "", url: ""),
+        type: NamedAPIResource(name: "", url: "")
+    )
 }
 
 struct ContestCombos: Codable {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MovesView: View {
     let pokemon: Pokemon
-    @State private var movesAndTypes = [String: Type]() // move name: type
+    @State private var movesAndTypes = [String: MoveType]() // move name: MoveType
 
     var defaultBackgroundColor: Color {
         pokemon.types.first?.color ?? .gray
@@ -48,7 +48,7 @@ struct MovesView: View {
             let moveName = move.move.name
             do {
                 let moveDetail = try await api.fetchMoveDetails(for: moveName)
-                let moveType = Type(name: moveDetail.type.name)
+                let moveType = MoveType(type: Type(name: moveDetail.type.name), details: moveDetail)
                 withAnimation {
                     movesAndTypes[moveName] = moveType
                 }
