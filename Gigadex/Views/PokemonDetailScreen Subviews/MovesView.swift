@@ -22,28 +22,11 @@ struct MovesView: View {
             
             ForEach(pokemon.learnedMoves, id: \.move.url) { move in
                 Button(action: {}) {
-                    HStack {
-                        Group {
-                            if let levelLearned = moveLevel(move) {
-                                Text("\(levelLearned)")
-                            } else {
-                                Text("?")
-                            }
-                        }
-                        .fontWeight(.semibold)
-                        .frame(width: 75)
-
-                        Image(systemName: moveImageName(move))
-                            .font(.subheadline)
-
-                        Text(moveName(move))
-
-                        Spacer()
-                    }
-                    .padding(2)
-                    .padding(.horizontal)
-                    .background(moveTypeColor(move))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    MoveRow(
+                        move: move,
+                        movesAndTypes: movesAndTypes,
+                        defaultBackgroundColor: defaultBackgroundColor
+                    )
                 }
                 .buttonStyle(.plain)
             }
@@ -51,22 +34,6 @@ struct MovesView: View {
         .task {
             await setMoveTypes(for: pokemon.learnedMoves)
         }
-    }
-
-    private func moveLevel(_ move: Move) -> Int? {
-        move.versionGroupDetails.first?.levelLearnedAt
-    }
-
-    private func moveName(_ move: Move) -> String {
-        move.move.name.capitalized.replacingOccurrences(of: "-", with: " ")
-    }
-
-    private func moveTypeColor(_ move: Move) -> Color {
-        movesAndTypes[move.move.name]?.color ?? defaultBackgroundColor
-    }
-
-    private func moveImageName(_ move: Move) -> String {
-        movesAndTypes[move.move.name]?.unstyledImageName ?? "questionmark.circle"
     }
 
     private func setMoveTypes(for moves: [Move]) async {

@@ -35,11 +35,6 @@ struct PokemonShelf: View {
         }
         .frame(height: 500)
     }
-
-    private func isDataLoaded(for pokemon: Pokemon) -> Bool {
-        return loadedPokemonIds.contains(pokemon.id) ||
-        (pokemon.details != nil && pokemon.species != nil && pokemon.evolutionChain != nil)
-    }
 }
 
 #Preview {

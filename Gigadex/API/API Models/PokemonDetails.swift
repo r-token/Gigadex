@@ -55,6 +55,11 @@ struct Move: Codable {
         case move
         case versionGroupDetails = "version_group_details"
     }
+
+    static let sampleData = Move(
+        move: Species(name: "pay-day", url: "https://xhtml.club/"),
+        versionGroupDetails: [VersionGroupDetail(levelLearnedAt: 8, moveLearnMethod: Species(name: "pay-day", url: "https://xhtml.club/"), versionGroup: Species(name: "pay-day", url: "https://xhtml.club/"))]
+    )
 }
 
 struct VersionGroupDetail: Codable {

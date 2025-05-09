@@ -16,17 +16,20 @@ struct StatsView: View {
                 .font(.title3)
 
             HStack {
+                // stat names column
                 VStack(alignment: .leading) {
                     ForEach(pokemon.stats, id: \.stat.url) { stat in
                         Text(cleanStat(stat))
                     }
                 }
+                // stat progress column
                 VStack {
                     ForEach(pokemon.stats, id: \.stat.url) { stat in
                         ProgressView(value: cleanProgress(stat))
                             .progressViewStyle(.linear)
                     }
                 }
+                // stat number column
                 VStack(alignment: .trailing) {
                     ForEach(pokemon.stats, id: \.stat.url) { stat in
                         Text("\(stat.baseStat)")

@@ -18,11 +18,7 @@ struct AbilitiesView: View {
         HStack(spacing: 16) {
             ForEach(pokemon.abilities, id: \.ability.url) { ability in
                 Text(cleanAbility(ability))
-                    .fontWeight(.semibold)
-                    .padding(2)
-                    .padding(.horizontal)
-                    .background(backgroundColor.opacity(0.7))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .badgeStyle(using: backgroundColor)
             }
         }
     }
