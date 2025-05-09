@@ -40,7 +40,7 @@ extension HomeScreen {
             self.api = api
         }
 
-        // async/await version of loadAllPokemon
+        // loadAllPokemon runs on app load - I have async/await & combine versions
         func loadAllPokemon(for gen: PokemonGen) async {
             do {
                 pokemonList = try await api.fetchAllPokemon(for: gen)
@@ -68,6 +68,7 @@ extension HomeScreen {
                 .store(in: &cancellables)
         }
 
+        // runs as pokemon scroll into view on the shelf
         func loadAllInfo(for pokemon: Pokemon) async {
             print("Loading all info for \(pokemon.name)")
             await withTaskGroup { group in
@@ -81,14 +82,12 @@ extension HomeScreen {
             }
         }
 
-        func loadPokemonDetails(for pokemon: Pokemon) async {
+        private func loadPokemonDetails(for pokemon: Pokemon) async {
             do {
                 guard let index = pokemonList.firstIndex(where: { $0.id == pokemon.id }) else {
                     print("Unknown pokemon")
                     return
                 }
-                // Don't hit the API again if we have already fetched details for this pokemon
-                // guard pokemonList[index].details == nil else { return }
 
                 let details = try await api.fetchDetails(for: pokemon.id)
 
@@ -104,14 +103,12 @@ extension HomeScreen {
             }
         }
 
-        func loadPokemonSpecies(for pokemon: Pokemon) async {
+        private func loadPokemonSpecies(for pokemon: Pokemon) async {
             do {
                 guard let index = pokemonList.firstIndex(where: { $0.id == pokemon.id }) else {
                     print("Unknown pokemon")
                     return
                 }
-                // Don't hit the API again if we have already fetched species info for this pokemon
-                // guard pokemonList[index].species == nil else { return }
 
                 let species = try await api.fetchSpeciesInfo(for: pokemon.id)
                 pokemonList[index].species = species
@@ -122,15 +119,12 @@ extension HomeScreen {
             }
         }
 
-        func loadEvolutionChain(for pokemon: Pokemon) async {
+        private func loadEvolutionChain(for pokemon: Pokemon) async {
             do {
                 guard let index = pokemonList.firstIndex(where: { $0.id == pokemon.id }) else {
                     print("Unknown pokemon")
                     return
                 }
-
-                // Don't hit the API again if we have already fetched the evolution chain for this pokemon
-                // guard pokemonList[index].evolutionChain == nil else { return }
 
                 // Make sure we have species data first
                 guard let species = pokemonList[index].species else {

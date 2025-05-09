@@ -26,7 +26,7 @@ struct MovesView: View {
         VStack(alignment: .leading) {
             Text("Learned Moves")
                 .font(.title3)
-            
+
             ForEach(pokemon.learnedMoves, id: \.move.url) { move in
                 Button(action: {}) {
                     MoveRow(
